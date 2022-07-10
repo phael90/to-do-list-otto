@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import NewTaskForm from "../NewTaskForm";
 
 const ToDoList = () => {
   const [toDoList, setToDoList] = useState([]);
@@ -29,8 +30,7 @@ const ToDoList = () => {
   };
 
   //CREATE
-  const addNewTask = (event) => {
-    event.preventDefault();
+  const addNewTask = (newTaskName) => {
     setError(null);
     fetch("http://localhost:4000/toDoList", {
       method: "POST",
@@ -114,19 +114,7 @@ const ToDoList = () => {
           );
         })}
       </ul>
-      <form onSubmit={(event) => addNewTask(event)}>
-        <label htmlFor="new-task-name">New task name:</label>
-        <input
-          name="new-task-name"
-          id="new-task-name"
-          type="text"
-          value={newTaskName}
-          onChange={(event) => {
-            setNewTaskName(event.target.value);
-          }}
-        />
-        <button type="submit">Add Task</button>
-      </form>
+      <NewTaskForm onSubmit={addNewTask} />
     </div>
   );
 };
