@@ -3,6 +3,7 @@ import {
   VisibleTaskCheckbox,
   CheckboxContainer,
   StyledIcon,
+  StyledLabel,
 } from "./Task.styles";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
@@ -23,7 +24,7 @@ const Task = ({ task, handleTaskUpdate, index }) => {
             handleTaskUpdate(event.target.checked, index);
           }}
         />
-        <label htmlFor={`task-${index}`}>{task.title}</label>
+        <StyledLabel htmlFor={`task-${index}`}>{task.title}</StyledLabel>
       </CheckboxContainer>
     </>
   );
