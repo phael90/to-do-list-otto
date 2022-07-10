@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import NewTaskForm from "../NewTaskForm";
+import Task from "../../components/Task";
 
 const ToDoList = () => {
   const [toDoList, setToDoList] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [newTaskName, setNewTaskName] = useState("");
 
   //GET
   const fetchToDoList = () => {
@@ -51,7 +51,6 @@ const ToDoList = () => {
         console.log("Error", error);
         setError(error);
       });
-    setNewTaskName("");
   };
 
   //UPDATE
@@ -100,16 +99,7 @@ const ToDoList = () => {
         {toDoList?.map((task, i) => {
           return (
             <li key={task.id}>
-              <label>
-                <input
-                  type="checkbox"
-                  checked={task.completed}
-                  onChange={(event) => {
-                    handleTaskUpdate(event.target.checked, i);
-                  }}
-                ></input>
-                {task.title}
-              </label>
+              <Task task={task} handleTaskUpdate={handleTaskUpdate} index={i} />
             </li>
           );
         })}
