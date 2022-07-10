@@ -3,14 +3,26 @@ import styled from "styled-components";
 const StyledForm = styled.form`
   display: flex;
   align-items: flex-start;
+  @media (max-width: 400px) {
+    flex-direction: column;
+  }
 `;
 
 const StyledLabel = styled.form`
   padding: 8px 0;
+  @media (max-width: 400px) {
+    padding: 0;
+    width: 100%;
+    text-align: left;
+  }
 `;
 
 const StyledInput = styled.input`
   margin: 8px;
+  @media (max-width: 400px) {
+    margin: 8px 0;
+    width: 100%;
+  }
 `;
 
 const StyledButton = styled.button`
