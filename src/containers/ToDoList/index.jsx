@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import NewTaskForm from "../NewTaskForm";
 import Task from "../../components/Task";
+import { Container, StyledList } from "./ToDoList.styles";
 
 const ToDoList = () => {
   const [toDoList, setToDoList] = useState([]);
@@ -43,7 +44,6 @@ const ToDoList = () => {
       },
     })
       .then((response) => {
-        console.log("Add new task completed");
         fetchToDoList();
         return response.json();
       })
@@ -69,7 +69,6 @@ const ToDoList = () => {
         }
       })
       .catch((error) => {
-        console.log(error);
         setError(error);
       });
   };
@@ -94,8 +93,9 @@ const ToDoList = () => {
   }
 
   return (
-    <div>
-      <ul>
+    <Container>
+      <h2>Todo list:</h2>
+      <StyledList>
         {toDoList?.map((task, i) => {
           return (
             <li key={task.id}>
@@ -103,9 +103,9 @@ const ToDoList = () => {
             </li>
           );
         })}
-      </ul>
+      </StyledList>
       <NewTaskForm onSubmit={addNewTask} />
-    </div>
+    </Container>
   );
 };
 
