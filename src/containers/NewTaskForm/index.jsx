@@ -1,10 +1,16 @@
 import { useState } from "react";
+import {
+  StyledForm,
+  StyledLabel,
+  StyledInput,
+  StyledButton,
+} from "./NewTaskForm.styles";
 
 const NewTaskForm = ({ onSubmit }) => {
   const [newTaskName, setNewTaskName] = useState("");
 
   return (
-    <form
+    <StyledForm
       onSubmit={(event) => {
         event.preventDefault();
         console.log(event);
@@ -12,8 +18,8 @@ const NewTaskForm = ({ onSubmit }) => {
         setNewTaskName("");
       }}
     >
-      <label htmlFor="new-task-name">New task name:</label>
-      <input
+      <StyledLabel htmlFor="new-task-name">New task name:</StyledLabel>
+      <StyledInput
         name="new-task-name"
         id="new-task-name"
         type="text"
@@ -22,8 +28,8 @@ const NewTaskForm = ({ onSubmit }) => {
           setNewTaskName(event.target.value);
         }}
       />
-      <button type="submit">Add Task</button>
-    </form>
+      <StyledButton type="submit">Add Task</StyledButton>
+    </StyledForm>
   );
 };
 
