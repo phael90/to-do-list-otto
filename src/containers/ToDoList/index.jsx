@@ -1,4 +1,3 @@
-import { SerializationError } from "@elastic/elasticsearch/lib/errors";
 import { useEffect, useState } from "react";
 
 const ToDoList = () => {
@@ -29,6 +28,34 @@ const ToDoList = () => {
       });
   };
 
+  //PUT
+  const updateTask = (task) => {
+    setError(null);
+    fetch(`http://localhost:4000/toDoList/${task.id}`, {
+      method: "PUT",
+      body: JSON.stringify(task),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Oops something went wrong when updating your task");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(error);
+      });
+  };
+  const handleTaskUpdate = (value, taskIndex) => {
+    const updateToDoList = [...toDoList];
+    updateToDoList[taskIndex].completed = value;
+
+    setToDoList(updateToDoList);
+    updateTask(updateToDoList[taskIndex]);
+  };
+
   useEffect(() => {
     fetchToDoList();
   }, []);
@@ -38,16 +65,25 @@ const ToDoList = () => {
   }
 
   if (error) {
-    return <p>{error}</p>;
+    return <p>{error.message}</p>;
   }
 
   return (
     <div>
       <ul>
-        {toDoList?.map((task) => {
+        {toDoList?.map((task, i) => {
           return (
             <li key={task.id}>
-              <label>{task.title}</label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={task.completed}
+                  onChange={(event) => {
+                    handleTaskUpdate(event.target.checked, i);
+                  }}
+                ></input>
+                {task.title}
+              </label>
             </li>
           );
         })}
