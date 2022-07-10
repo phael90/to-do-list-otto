@@ -1,0 +1,14 @@
+{
+  "toDoList": [
+    {
+      "id": 1,
+      "title": "walk the doggo",
+      "completed": true
+    },
+    {
+      "id": 2,
+      "title": "feed the doggo",
+      "completed": true
+    }
+  ]
+}
