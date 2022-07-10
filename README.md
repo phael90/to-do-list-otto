@@ -6,13 +6,17 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 Node.js version >=14.17.5
 
-## Installation
+## Initial setup
 
 In the project directory run:
 
 ### `npm install`
 
 ### `npm run start`
+
+In order to run mock API with some mock data the application will interact with, run:
+
+### `npx json-server --watch data/db.json --port 4000`
 
 ## Testing
 
