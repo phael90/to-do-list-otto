@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
 const ToDoList = () => {
-  const [newTaskName, setNewTaskName] = useState("");
   const [toDoList, setToDoList] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [newTaskName, setNewTaskName] = useState("");
 
   //GET
   const fetchToDoList = () => {
@@ -28,7 +28,33 @@ const ToDoList = () => {
       });
   };
 
-  //PUT
+  //CREATE
+  const addNewTask = (event) => {
+    event.preventDefault();
+    setError(null);
+    fetch("http://localhost:4000/toDoList", {
+      method: "POST",
+      body: JSON.stringify({
+        title: newTaskName,
+        completed: false,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        console.log("Add new task completed");
+        fetchToDoList();
+        return response.json();
+      })
+      .catch((error) => {
+        console.log("Error", error);
+        setError(error);
+      });
+    setNewTaskName("");
+  };
+
+  //UPDATE
   const updateTask = (task) => {
     setError(null);
     fetch(`http://localhost:4000/toDoList/${task.id}`, {
@@ -88,16 +114,19 @@ const ToDoList = () => {
           );
         })}
       </ul>
-      <input
-        name="new-task-name"
-        id="new-task-name"
-        type="text"
-        value={newTaskName}
-        onChange={(event) => {
-          setNewTaskName(event.target.value);
-        }}
-      />
-      <button type="submit">Add Task</button>
+      <form onSubmit={(event) => addNewTask(event)}>
+        <label htmlFor="new-task-name">New task name:</label>
+        <input
+          name="new-task-name"
+          id="new-task-name"
+          type="text"
+          value={newTaskName}
+          onChange={(event) => {
+            setNewTaskName(event.target.value);
+          }}
+        />
+        <button type="submit">Add Task</button>
+      </form>
     </div>
   );
 };
