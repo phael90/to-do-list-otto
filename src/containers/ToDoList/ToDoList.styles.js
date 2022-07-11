@@ -7,8 +7,12 @@ const StyledList = styled.ul`
 `;
 
 const Container = styled.div`
-  width: 90%;
+  width: 30%;
   margin: auto;
+
+  @media (max-width: 800px) {
+    width: 90%;
+  }
 `;
 
 export { Container, StyledList };

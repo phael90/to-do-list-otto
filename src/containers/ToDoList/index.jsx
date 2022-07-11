@@ -84,10 +84,6 @@ const ToDoList = () => {
     fetchToDoList();
   }, []);
 
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-
   if (error) {
     return <p>{error.message}</p>;
   }
@@ -95,6 +91,8 @@ const ToDoList = () => {
   return (
     <Container>
       <h2>Todo list:</h2>
+      {isLoading && <p>Loading</p>}
+
       <StyledList>
         {toDoList?.map((task, i) => {
           return (
@@ -104,7 +102,9 @@ const ToDoList = () => {
           );
         })}
       </StyledList>
-      <NewTaskForm onSubmit={addNewTask} />
+      {!isLoading && toDoList.length && (
+        <NewTaskForm handleSubmit={addNewTask} />
+      )}
     </Container>
   );
 };
