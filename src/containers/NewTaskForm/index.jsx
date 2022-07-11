@@ -1,35 +1,48 @@
-import { useState } from "react";
 import {
   StyledForm,
   StyledLabel,
   StyledInput,
   StyledButton,
+  StyledErrorMessage,
 } from "./NewTaskForm.styles";
+import { Formik } from "formik";
 
-const NewTaskForm = ({ onSubmit }) => {
-  const [newTaskName, setNewTaskName] = useState("");
-
+const NewTaskForm = ({ handleSubmit }) => {
   return (
-    <StyledForm
-      onSubmit={(event) => {
-        event.preventDefault();
-        console.log(event);
-        onSubmit(newTaskName);
-        setNewTaskName("");
+    <Formik
+      initialValues={{ taskName: "" }}
+      validate={(values) => {
+        const errors = {};
+        if (!values.taskName) {
+          errors.taskName = "This field is required";
+        }
+        return errors;
+      }}
+      onSubmit={(values) => {
+        handleSubmit(values.taskName);
       }}
     >
-      <StyledLabel htmlFor="new-task-name">New task name:</StyledLabel>
-      <StyledInput
-        name="new-task-name"
-        id="new-task-name"
-        type="text"
-        value={newTaskName}
-        onChange={(event) => {
-          setNewTaskName(event.target.value);
-        }}
-      />
-      <StyledButton type="submit">Add Task</StyledButton>
-    </StyledForm>
+      {({ values, isValid, dirty, errors, touched }) => (
+        <StyledForm
+          onSubmit={(event) => {
+            event.preventDefault();
+            handleSubmit(values.taskName);
+          }}
+        >
+          <StyledLabel htmlFor="taskName">New task name:</StyledLabel>
+          <StyledInput name="taskName" />
+          {errors.taskName && touched.taskName && (
+            <StyledErrorMessage name="taskName">
+              {errors.taskName}
+            </StyledErrorMessage>
+          )}
+
+          <StyledButton disabled={!dirty || !isValid} type="submit">
+            Add Task
+          </StyledButton>
+        </StyledForm>
+      )}
+    </Formik>
   );
 };
 
