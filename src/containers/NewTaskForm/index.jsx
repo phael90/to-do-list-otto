@@ -22,13 +22,8 @@ const NewTaskForm = ({ handleSubmit }) => {
         handleSubmit(values.taskName);
       }}
     >
-      {({ values, isValid, dirty, errors, touched }) => (
-        <StyledForm
-          onSubmit={(event) => {
-            event.preventDefault();
-            handleSubmit(values.taskName);
-          }}
-        >
+      {({ isValid, dirty, errors, touched }) => (
+        <StyledForm>
           <StyledLabel htmlFor="taskName">New task name:</StyledLabel>
           <StyledInput name="taskName" />
           {errors.taskName && touched.taskName && (
